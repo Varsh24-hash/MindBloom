@@ -1,0 +1,9 @@
+{
+  "name": "MindBloom",
+  "description": "An AI companion for mental wellness with a calm, dark-themed UI.",
+  "requestFramePermissions": [
+    "geolocation",
+    "microphone",
+    "camera"
+  ]
+}
