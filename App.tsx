@@ -29,8 +29,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentView, setCurrentView] = useState<'chat' | 'mood-tracker' | 'therapists' | 'home' | 'about'>('home');
 
-  // Next.js requirement: Environment variables used in the browser must be prefixed with NEXT_PUBLIC_
-  const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
+  const GOOGLE_CLIENT_ID = process.env.VITE_GOOGLE_CLIENT_ID || "844389175436-flr9gltj1fami94bccill1us3phdla3q.apps.googleusercontent.com";
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem('mindbloom_user');
@@ -52,23 +51,31 @@ const App: React.FC = () => {
       }).join(''));
       return JSON.parse(jsonPayload);
     } catch (e) {
+      console.error("JWT Decode Error:", e);
       return null;
     }
   };
 
-  const handleLoginSuccess = (credentialResponse: any) => {
-    const payload = decodeJwt(credentialResponse.credential);
-    if (payload) {
-      const newUser: User = {
-        name: payload.name,
-        email: payload.email,
-        avatar: payload.picture,
-        googleId: payload.sub
-      };
-      sessionStorage.setItem('mindbloom_user', JSON.stringify(newUser));
-      setUser(newUser);
-      setShowLoginModal(false);
+  const handleLoginSuccess = (response: any) => {
+    if (response.credential) {
+      const payload = decodeJwt(response.credential);
+      if (payload) {
+        const newUser: User = {
+          name: payload.name,
+          email: payload.email,
+          avatar: payload.picture,
+          googleId: payload.sub
+        };
+        console.log("User Authenticated:", newUser);
+        saveUser(newUser);
+      }
     }
+  };
+
+  const saveUser = (userData: User) => {
+    sessionStorage.setItem('mindbloom_user', JSON.stringify(userData));
+    setUser(userData);
+    setShowLoginModal(false);
   };
 
   const handleSignOut = () => {
@@ -100,7 +107,6 @@ const App: React.FC = () => {
     try {
       const currentSession = sessions.find(s => s.id === sessionId);
       const history = currentSession?.messages || [];
-      
       const responseText = await sendMessageToGemini(history, text, attachment);
       const modelMessage: Message = { role: 'model', text: responseText };
       
@@ -117,7 +123,7 @@ const App: React.FC = () => {
     }
   };
 
-  const hasStarted = currentSessionId !== null && sessions.find(s => s.id === currentSessionId)?.messages.length! > 0;
+  const hasStarted = currentSessionId !== null && (sessions.find(s => s.id === currentSessionId)?.messages.length || 0) > 0;
 
   return (
     <div className="min-h-screen bg-[#131314] flex flex-col font-sans overflow-hidden selection:bg-pink-500/30">

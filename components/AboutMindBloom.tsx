@@ -4,25 +4,25 @@ import { LogoHeart, SparkleIcon, CheckBadgeIcon, UserIcon } from './Icons';
 
 const creators = [
   {
-    name: "Varshini",
+    name: "Alex Rivers",
     role: "Founder & Lead Visionary",
     contribution: "A mental health advocate passionate about bridging the gap between technology and human empathy. Alex designed the core philosophy and mission of MindBloom.",
     avatarColor: "bg-pink-500/20 text-pink-400"
   },
   {
-    name: "Chandrakala",
+    name: "Sarah Chen",
     role: "Head of AI Wellness",
     contribution: "A machine learning engineer specializing in empathetic response systems. Sarah ensures that every conversation with Bloom feels supportive, safe, and human.",
     avatarColor: "bg-purple-500/20 text-purple-400"
   },
   {
-    name: "Nandini",
+    name: "Jordan Lee",
     role: "Lead Product Designer",
     contribution: "With a focus on calming aesthetics, Jordan crafted the dark-themed interface to minimize sensory overload and create a space of total tranquility.",
     avatarColor: "bg-orange-500/20 text-orange-400"
   },
   {
-    name: "Sarthak",
+    name: "Dr. Elena Rodriguez",
     role: "Clinical Advisor",
     contribution: "A licensed psychologist who oversees the therapeutic frameworks within MindBloom to ensure our AI follows professional wellness standards.",
     avatarColor: "bg-blue-500/20 text-blue-400"
